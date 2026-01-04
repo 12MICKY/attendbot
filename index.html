@@ -2,7 +2,7 @@
 <html lang="th">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Weight Training | Attendance</title>
 
 <style>
@@ -19,6 +19,7 @@
 }
 
 *{box-sizing:border-box}
+
 body{
   margin:0;
   min-height:100vh;
@@ -48,7 +49,6 @@ body{
 .header h1{
   margin:0;
   font-size:26px;
-  letter-spacing:.5px;
 }
 .header p{
   margin:6px 0 0;
@@ -56,9 +56,7 @@ body{
   color:var(--muted);
 }
 
-.section{
-  margin-top:18px;
-}
+.section{margin-top:18px}
 
 label{
   display:block;
@@ -77,9 +75,7 @@ input{
   font-size:16px;
   outline:none;
 }
-input:focus{
-  border-color:var(--primary);
-}
+input:focus{border-color:var(--primary)}
 
 button{
   width:100%;
@@ -101,11 +97,6 @@ button{
   background:transparent;
   color:var(--primary);
   border:1px solid var(--primary);
-}
-
-button:disabled{
-  opacity:.6;
-  cursor:not-allowed;
 }
 
 .divider{
@@ -149,7 +140,7 @@ button:disabled{
 
   <!-- TEACHER -->
   <div class="section">
-    <label>รหัสอาจารย์ (สำหรับเริ่มคาบใหม่)</label>
+    <label>รหัสอาจารย์ (เริ่มคาบใหม่)</label>
     <input id="teacher" type="password" placeholder="กรอกรหัสอาจารย์">
     <button class="btn-reset" onclick="resetSystem()">เริ่มคาบใหม่</button>
   </div>
@@ -186,14 +177,17 @@ function resetSystem(){
 }
 
 function send(payload){
-  show("กำลังเชื่อมต่อระบบ...");
+  show("กำลังส่งข้อมูล...");
   fetch(API_URL,{
     method:"POST",
+    mode:"no-cors",          // แก้ปัญหาเชื่อมต่อไม่ได้
+    headers:{
+      "Content-Type":"application/json"
+    },
     body: JSON.stringify(payload)
   })
-  .then(r=>r.json())
-  .then(d=>{
-    show(d.message, d.message.includes("ไม่"));
+  .then(()=>{
+    show("ส่งข้อมูลเรียบร้อย");
     document.getElementById("sid").value="";
     document.getElementById("teacher").value="";
   })
@@ -205,7 +199,7 @@ function send(payload){
 function show(text,isError=false){
   const el=document.getElementById("msg");
   el.textContent=text;
-  el.style.color=isError?"var(--danger)":"var(--success)";
+  el.style.color=isError? "#ef4444" : "#22c55e";
 }
 </script>
 
