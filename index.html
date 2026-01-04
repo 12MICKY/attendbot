@@ -2,109 +2,212 @@
 <html lang="th">
 <head>
 <meta charset="utf-8">
-<title>Weight Training Attendance</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Weight Training | Attendance</title>
+
 <style>
+:root{
+  --bg1:#020617;
+  --bg2:#0f172a;
+  --card:#020617cc;
+  --border:#1e293b;
+  --text:#e5e7eb;
+  --muted:#94a3b8;
+  --primary:#38bdf8;
+  --success:#22c55e;
+  --danger:#ef4444;
+}
+
+*{box-sizing:border-box}
 body{
   margin:0;
   min-height:100vh;
   display:flex;
   align-items:center;
   justify-content:center;
-  background:radial-gradient(circle at top,#0f172a,#020617 70%);
-  color:#e5e7eb;
+  background:
+    radial-gradient(circle at top,var(--bg2),var(--bg1) 70%);
   font-family:system-ui,"Noto Sans Thai",sans-serif;
+  color:var(--text);
 }
+
 .card{
-  width:360px;
+  width:100%;
+  max-width:380px;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:20px;
   padding:28px;
-  border-radius:18px;
-  background:rgba(15,23,42,.75);
-  box-shadow:0 20px 60px rgba(0,0,0,.5);
+  box-shadow:0 30px 80px rgba(0,0,0,.6);
 }
-h1{margin:0 0 6px;text-align:center}
-p{margin:0 0 20px;text-align:center;color:#94a3b8}
-input,button{
+
+.header{
+  text-align:center;
+  margin-bottom:22px;
+}
+.header h1{
+  margin:0;
+  font-size:26px;
+  letter-spacing:.5px;
+}
+.header p{
+  margin:6px 0 0;
+  font-size:14px;
+  color:var(--muted);
+}
+
+.section{
+  margin-top:18px;
+}
+
+label{
+  display:block;
+  margin-bottom:6px;
+  font-size:14px;
+  color:var(--muted);
+}
+
+input{
   width:100%;
   padding:14px;
   border-radius:12px;
-  border:none;
-  outline:none;
-  margin-bottom:12px;
-  font-size:16px;
-}
-input{
+  border:1px solid var(--border);
   background:#020617;
-  color:#e5e7eb;
-  border:1px solid #1e293b;
+  color:var(--text);
+  font-size:16px;
+  outline:none;
 }
+input:focus{
+  border-color:var(--primary);
+}
+
 button{
-  background:#38bdf8;
-  color:#020617;
+  width:100%;
+  padding:14px;
+  border-radius:14px;
+  border:none;
+  font-size:16px;
   font-weight:600;
   cursor:pointer;
+  margin-top:12px;
 }
-button.secondary{
-  background:#020617;
-  color:#38bdf8;
-  border:1px solid #38bdf8;
+
+.btn-main{
+  background:linear-gradient(135deg,#38bdf8,#0ea5e9);
+  color:#020617;
 }
+
+.btn-reset{
+  background:transparent;
+  color:var(--primary);
+  border:1px solid var(--primary);
+}
+
+button:disabled{
+  opacity:.6;
+  cursor:not-allowed;
+}
+
+.divider{
+  margin:22px 0;
+  border:none;
+  border-top:1px solid var(--border);
+}
+
 #msg{
+  margin-top:16px;
   text-align:center;
-  margin-top:10px;
+  font-size:15px;
+  min-height:22px;
 }
+
 .footer{
-  margin-top:18px;
+  margin-top:22px;
   text-align:center;
   font-size:12px;
-  color:#64748b;
+  color:var(--muted);
 }
 </style>
 </head>
 
 <body>
+
 <div class="card">
-  <h1>Weight Training</h1>
-  <p>Student Attendance System</p>
+  <div class="header">
+    <h1>Weight Training</h1>
+    <p>Student Attendance System</p>
+  </div>
 
-  <input id="sid" placeholder="กรอกรหัสนักเรียน">
-  <button onclick="checkin()">เช็กชื่อเข้าเรียน</button>
+  <!-- STUDENT -->
+  <div class="section">
+    <label>รหัสนักเรียน</label>
+    <input id="sid" inputmode="numeric" placeholder="กรอกรหัสนักเรียน">
+    <button class="btn-main" onclick="checkin()">เช็กชื่อเข้าเรียน</button>
+  </div>
 
-  <hr style="border:none;border-top:1px solid #1e293b;margin:16px 0">
+  <hr class="divider">
 
-  <input id="teacher" type="password" placeholder="รหัสอาจารย์">
-  <button class="secondary" onclick="resetSystem()">เริ่มคาบใหม่</button>
+  <!-- TEACHER -->
+  <div class="section">
+    <label>รหัสอาจารย์ (สำหรับเริ่มคาบใหม่)</label>
+    <input id="teacher" type="password" placeholder="กรอกรหัสอาจารย์">
+    <button class="btn-reset" onclick="resetSystem()">เริ่มคาบใหม่</button>
+  </div>
 
   <div id="msg"></div>
 
   <div class="footer">
-    Weight Training Club • Satit Chula
+    Weight Training Club • Satit Chula<br>
+    Secure Attendance System
   </div>
 </div>
 
 <script>
-const API_URL = "https://script.google.com/macros/s/AKfycbx8fEgU6S6GzeFUMkId-oSeom-zxbVLaMR3k02y-anvHcw-CxYVv310-kaniVSTlmNcCQ/exec";
+/* ===== Google Apps Script URL ===== */
+const API_URL =
+"https://script.google.com/macros/s/AKfycbx8fEgU6S6GzeFUMkId-oSeom-zxbVLaMR3k02y-anvHcw-CxYVv310-kaniVSTlmNcCQ/exec";
 
 function checkin(){
-  send({ sid: document.getElementById("sid").value });
+  const sid = document.getElementById("sid").value.trim();
+  if(!sid){
+    show("กรุณากรอกรหัสนักเรียน",true);
+    return;
+  }
+  send({ sid });
 }
 
 function resetSystem(){
-  send({ teacher: document.getElementById("teacher").value });
+  const teacher = document.getElementById("teacher").value.trim();
+  if(!teacher){
+    show("กรุณากรอกรหัสอาจารย์",true);
+    return;
+  }
+  send({ teacher });
 }
 
 function send(payload){
+  show("กำลังเชื่อมต่อระบบ...");
   fetch(API_URL,{
     method:"POST",
     body: JSON.stringify(payload)
   })
   .then(r=>r.json())
   .then(d=>{
-    document.getElementById("msg").innerText = d.message;
+    show(d.message, d.message.includes("ไม่"));
+    document.getElementById("sid").value="";
+    document.getElementById("teacher").value="";
   })
   .catch(()=>{
-    document.getElementById("msg").innerText = "เชื่อมต่อระบบไม่ได้";
+    show("เชื่อมต่อระบบไม่ได้",true);
   });
 }
+
+function show(text,isError=false){
+  const el=document.getElementById("msg");
+  el.textContent=text;
+  el.style.color=isError?"var(--danger)":"var(--success)";
+}
 </script>
+
 </body>
 </html>
