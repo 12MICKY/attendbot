@@ -2,7 +2,7 @@
 <html lang="th">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Weight Training Attendance</title>
 
 <style>
@@ -17,16 +17,16 @@ body{
   color:#e5e7eb;
 }
 .card{
-  width:360px;
+  width:420px;
   padding:28px;
-  border-radius:20px;
-  background:rgba(15,23,42,.8);
+  border-radius:22px;
+  background:rgba(15,23,42,.85);
   border:1px solid #1e293b;
-  box-shadow:0 30px 80px rgba(0,0,0,.5);
+  box-shadow:0 30px 80px rgba(0,0,0,.6);
 }
 h1{text-align:center;margin:0;font-size:26px}
 p{text-align:center;color:#94a3b8;margin:6px 0 20px}
-input,button{
+select,button{
   width:100%;
   padding:14px;
   border-radius:12px;
@@ -34,7 +34,7 @@ input,button{
   border:none;
   margin-bottom:12px;
 }
-input{
+select{
   background:#020617;
   color:#e5e7eb;
   border:1px solid #1e293b;
@@ -50,10 +50,11 @@ button.reset{
   color:#38bdf8;
   border:1px solid #38bdf8;
 }
-#msg{
+#msg{text-align:center;min-height:24px}
+.counter{
   text-align:center;
-  min-height:22px;
   margin-top:8px;
+  color:#22c55e;
 }
 footer{
   text-align:center;
@@ -67,53 +68,109 @@ footer{
 <body>
 <div class="card">
   <h1>Weight Training</h1>
-  <p>Student Attendance System</p>
+  <p>เช็กชื่อเข้าเรียน</p>
 
-  <input id="sid" placeholder="กรอกรหัสนักเรียน">
-  <button onclick="sendStudent()">เช็กชื่อเข้าเรียน</button>
+  <select id="sid">
+    <option value="">-- เลือกชื่อ --</option>
+    <option value="68265">เด็กชาย อิวโก้ แมคโอ เทย์</option>
+    <option value="68038">เด็กชาย ชินอชิต์ อุดมรัชตะวานิชย์</option>
+    <option value="68169">เด็กชาย พิชณุตม์ พิริยะสงวนพงศ์</option>
+    <option value="68115">เด็กชาย นาวี วีระวงศกร</option>
+    <option value="67229">เด็กชาย ศราวิน บรรลุทรัพย์</option>
+    <option value="67065">เด็กชาย ณพล ตั้งจาตุรนต์รัศที</option>
+    <option value="67073">เด็กชาย ณัฏธนันท์ กฤษฎาภค</option>
+    <option value="67240">เด็กชาย สิกาญจน์ แสงสุริยไทย</option>
+    <option value="67249">เด็กชาย เสฎฐพงศ์ มหัทธนกุล</option>
+    <option value="67160">เด็กชาย พัสกรณ์ วัชระประไพพันธ์</option>
+    <option value="66233">เด็กชาย ธนากร แดงนภาพรกุล</option>
+    <option value="65097">เด็กชาย ธัญสิริ พระยาน้อย</option>
+    <option value="65119">เด็กชาย ปรัตถกร โสราช</option>
+    <option value="64029">นาย ชลภัทร เทศสกุลวงศ์</option>
+    <option value="64182">นาย ศศะ คะชิมา</option>
+    <option value="64024">นาย ชยกฤช ถาวรพานิช</option>
+    <option value="64094">นาย ธีรภัทร ศรีจิตร</option>
+    <option value="64100">นาย นิธิศ กุลไชย</option>
+    <option value="64110">นาย ปภังกร โอกาประกาศิต</option>
+    <option value="64089">นาย ธิปก ตั้งศิริพัฒน์</option>
+    <option value="63106">นาย ปกป้อง โพธิ์จักร</option>
+    <option value="63222">นาย สรัล อัสสะบำรุงรัตน์</option>
+    <option value="63219">นาย ศุภลิน ชื่นไพโรจน์</option>
+  </select>
+
+  <button onclick="checkin()">เช็กชื่อ</button>
+
+  <div id="msg"></div>
+  <div class="counter" id="count"></div>
 
   <hr style="border:0;border-top:1px solid #1e293b;margin:16px 0">
 
-  <input id="teacher" type="password" placeholder="รหัสอาจารย์ (รีเซ็ตคาบ)">
-  <button class="reset" onclick="sendTeacher()">เริ่มคาบใหม่</button>
-
-  <div id="msg"></div>
+  <button class="reset" onclick="resetAll()">รีเซ็ต (ครู)</button>
 
   <footer>
     Weight Training Club · Satit Chula<br>
-    Secure Attendance System
+    GitHub Pages + Discord Webhook
   </footer>
 </div>
 
 <script>
-const API_URL =
-"https://script.google.com/macros/s/AKfycby7LCi2P96VPvUzpbS4TAFhXGKAH1sf1KIGKc3lLoKvpDyxSipRd-0K72nJWjaV7htDTQ/exec";
+/* ================= CONFIG ================= */
+const DISCORD_WEBHOOK_URL =
+"https://discord.com/api/webhooks/1457278450837749893/RmPQuqqLuGRGVKLep2xRjtp7RM3b32R0c_p-7AVcIkRx8USXNF__tg_Mzk_gkX_0xmy3";
+/* ======================================== */
 
-function sendStudent(){
-  send({ sid: document.getElementById("sid").value });
+const checked = JSON.parse(localStorage.getItem("checked") || "{}");
+
+function updateCount(){
+  document.getElementById("count").innerText =
+    "เช็กชื่อแล้ว " + Object.keys(checked).length + " คน";
 }
 
-function sendTeacher(){
-  send({ teacher: document.getElementById("teacher").value });
-}
-
-function send(data){
-  document.getElementById("msg").innerText="กำลังส่งข้อมูล...";
-  fetch(API_URL,{
+function sendDiscord(text){
+  fetch(DISCORD_WEBHOOK_URL,{
     method:"POST",
-    mode:"no-cors",
     headers:{ "Content-Type":"application/json" },
-    body: JSON.stringify(data)
-  })
-  .then(()=>{
-    document.getElementById("msg").innerText="ส่งข้อมูลแล้ว";
-    document.getElementById("sid").value="";
-    document.getElementById("teacher").value="";
-  })
-  .catch(()=>{
-    document.getElementById("msg").innerText="เชื่อมต่อระบบไม่ได้";
+    body: JSON.stringify({ content: text })
   });
 }
+
+function checkin(){
+  const sel = document.getElementById("sid");
+  const sid = sel.value;
+  const name = sel.options[sel.selectedIndex].text;
+
+  if(!sid){
+    document.getElementById("msg").innerText="กรุณาเลือกชื่อ";
+    return;
+  }
+  if(checked[sid]){
+    document.getElementById("msg").innerText="ชื่อนี้เช็กแล้ว";
+    return;
+  }
+
+  checked[sid] = true;
+  localStorage.setItem("checked", JSON.stringify(checked));
+
+  const time = new Date().toLocaleString("th-TH");
+  sendDiscord(
+    "เช็กชื่อเข้าเรียน\n" +
+    "ชื่อ: " + name + "\n" +
+    "รหัส: " + sid + "\n" +
+    "เวลา: " + time
+  );
+
+  document.getElementById("msg").innerText="เช็กชื่อสำเร็จ";
+  updateCount();
+}
+
+function resetAll(){
+  if(!confirm("ยืนยันรีเซ็ตข้อมูลทั้งหมด?")) return;
+  localStorage.removeItem("checked");
+  sendDiscord("รีเซ็ตข้อมูลเช็กชื่อ (โดยครู)");
+  document.getElementById("msg").innerText="รีเซ็ตเรียบร้อย";
+  updateCount();
+}
+
+updateCount();
 </script>
 </body>
 </html>
