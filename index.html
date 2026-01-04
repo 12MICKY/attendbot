@@ -2,66 +2,203 @@
 <html lang="th">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>เช็กชื่อเข้าเรียน</title>
+
+<style>
+:root{
+  --bg:#020617;
+  --card:#020617;
+  --border:#1e293b;
+  --primary:#38bdf8;
+  --primary-dark:#0ea5e9;
+  --text:#e5e7eb;
+  --muted:#94a3b8;
+  --success:#22c55e;
+  --danger:#ef4444;
+}
+
+*{
+  box-sizing:border-box;
+  font-family:"Noto Sans Thai",system-ui,sans-serif;
+}
+
+body{
+  margin:0;
+  min-height:100vh;
+  background:radial-gradient(circle at top,#0f172a,#020617 70%);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.card{
+  background:rgba(2,6,23,.9);
+  backdrop-filter:blur(10px);
+  width:100%;
+  max-width:440px;
+  padding:32px 28px;
+  border-radius:20px;
+  border:1px solid var(--border);
+  box-shadow:0 25px 60px rgba(0,0,0,.6);
+  text-align:center;
+}
+
+h1{margin:0;font-size:26px;color:var(--text)}
+h2{margin:6px 0 24px;font-size:15px;color:var(--muted)}
+
+select{
+  width:100%;
+  padding:14px;
+  font-size:16px;
+  border-radius:14px;
+  border:1px solid var(--border);
+  background:#020617;
+  color:var(--text);
+}
+
+button{
+  margin-top:18px;
+  width:100%;
+  padding:14px;
+  font-size:17px;
+  font-weight:600;
+  border:none;
+  border-radius:16px;
+  cursor:pointer;
+}
+
+.btn-main{
+  background:linear-gradient(135deg,var(--primary),#7dd3fc);
+  color:#020617;
+}
+
+.btn-summary{
+  margin-top:10px;
+  background:#020617;
+  color:var(--primary);
+  border:1px solid var(--primary);
+}
+
+#msg{
+  margin-top:16px;
+  font-size:15px;
+  font-weight:600;
+}
+
+.footer{
+  margin-top:20px;
+  font-size:12px;
+  color:#64748b;
+}
+</style>
 </head>
 
-<body style="font-family:sans-serif;text-align:center;margin-top:40px">
-<h2>เช็กชื่อเข้าเรียน<br>ชมรม Weight Training</h2>
+<body>
+<div class="card">
+  <h1>เช็กชื่อเข้าเรียน</h1>
+  <h2>ชมรม Weight Training</h2>
 
-<select id="name" style="padding:10px;width:90%;font-size:16px">
-  <option value="">-- เลือกชื่อ --</option>
-  <option>เด็กชาย อิฏิไก แมคโอ เทย์</option>
-  <option>เด็กชาย ชินวดี อุดมรัตนะวนิชย์</option>
-  <option>เด็กชาย พชรเดช พิริยะสว่างพงศ์</option>
-  <option>เด็กชาย นวธี วีระวงศกร</option>
-  <option>เด็กชาย ศรวิน บรรลุทรัพย์</option>
-  <option>เด็กชาย ณพล ตั้งจารุนศิริ</option>
-  <option>เด็กชาย ณัฏธนันท์ กฤษฎามาศ</option>
-  <option>เด็กชาย สิทธิญาณ แสงสุริยไทย</option>
-  <option>เด็กชาย เสฎฐพงศ์ มหัทธนกุล</option>
-  <option>เด็กชาย พัสกร วัชระประไพพันธ์</option>
-  <option>เด็กชาย ธนากร แดงนภาพรกุล</option>
-  <option>เด็กชาย ธัญสิริ พระยาน้อย</option>
-  <option>เด็กชาย ปรัตถกร โสราช</option>
-  <option>นาย ชลภัทร เทศสกุลวงศ์</option>
-  <option>นาย ศศะ คะชิมา</option>
-  <option>นาย ชยกฤช ถาวรพานิช</option>
-  <option>นาย ธีรภัทร ศรีจิตร</option>
-  <option>นาย นิธิศ กุลไชย</option>
-  <option>นาย ปภังกร โอกาประกาศิต</option>
-  <option>นาย ธิป ตั้งศิริพัฒน์</option>
-  <option>นาย ปกป้อง โพธิ์จักร</option>
-  <option>นาย สรัล อัสสะบำรุงรัตน์</option>
-  <option>นาย ศุภลิน ชื่นไพโรจน์</option>
-</select>
+  <select id="name">
+    <option value="">— เลือกชื่อ —</option>
+    <option>เด็กชาย อิฏิไก แมคโอ เทย์</option>
+    <option>เด็กชาย ชินวดี อุดมรัตนะวนิชย์</option>
+    <option>เด็กชาย พชรเดช พิริยะสว่างพงศ์</option>
+    <option>เด็กชาย นวธี วีระวงศกร</option>
+    <option>เด็กชาย ศรวิน บรรลุทรัพย์</option>
+    <option>เด็กชาย ณพล ตั้งจารุนศิริ</option>
+    <option>เด็กชาย ณัฏธนันท์ กฤษฎามาศ</option>
+    <option>เด็กชาย สิทธิญาณ แสงสุริยไทย</option>
+    <option>เด็กชาย เสฎฐพงศ์ มหัทธนกุล</option>
+    <option>เด็กชาย พัสกร วัชระประไพพันธ์</option>
+    <option>เด็กชาย ธนากร แดงนภาพรกุล</option>
+    <option>เด็กชาย ธัญสิริ พระยาน้อย</option>
+    <option>เด็กชาย ปรัตถกร โสราช</option>
+    <option>นาย ชลภัทร เทศสกุลวงศ์</option>
+    <option>นาย ศศะ คะชิมา</option>
+    <option>นาย ชยกฤช ถาวรพานิช</option>
+    <option>นาย ธีรภัทร ศรีจิตร</option>
+    <option>นาย นิธิศ กุลไชย</option>
+    <option>นาย ปภังกร โอกาประกาศิต</option>
+    <option>นาย ธิป ตั้งศิริพัฒน์</option>
+    <option>นาย ปกป้อง โพธิ์จักร</option>
+    <option>นาย สรัล อัสสะบำรุงรัตน์</option>
+    <option>นาย ศุภลิน ชื่นไพโรจน์</option>
+  </select>
 
-<br><br>
-<button onclick="send()" style="padding:12px 30px;font-size:16px">
-เช็กชื่อ
-</button>
+  <button class="btn-main" onclick="checkin()">เช็กชื่อ</button>
+  <button class="btn-summary" onclick="sendSummary()">สรุปวันนี้ (ครู)</button>
 
-<p id="msg"></p>
+  <div id="msg"></div>
+  <div class="footer">AttendBot – QR Attendance System</div>
+</div>
 
 <script>
 const webhook = "https://discordapp.com/api/webhooks/1457278450837749893/RmPQuqqLuGRGVKLep2xRjtp7RM3b32R0c_p-7AVcIkRx8USXNF__tg_Mzk_gkX_0xmy3";
 
-function send(){
-  const name = document.getElementById("name").value;
-  if(!name){
-    alert("กรุณาเลือกชื่อ");
+function today(){
+  const d=new Date();
+  return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+}
+
+function getData(){
+  return JSON.parse(localStorage.getItem("attend-"+today())||"[]");
+}
+
+function saveData(data){
+  localStorage.setItem("attend-"+today(),JSON.stringify(data));
+}
+
+function checkin(){
+  const name=document.getElementById("name").value;
+  if(!name){alert("กรุณาเลือกชื่อ");return;}
+
+  let data=getData();
+  if(data.includes(name)){
+    document.getElementById("msg").style.color="var(--danger)";
+    document.getElementById("msg").innerText="คุณเช็กชื่อไปแล้ววันนี้";
     return;
   }
+
+  data.push(name);
+  saveData(data);
 
   fetch(webhook,{
     method:"POST",
     headers:{"Content-Type":"application/json"},
     body:JSON.stringify({
-      content:`📌 เช็กชื่อเข้าเรียน\n👤 ${name}\n⏰ ${new Date().toLocaleString()}`
+      content:
+`เช็กชื่อเข้าเรียน
+ชื่อ: ${name}
+เวลา: ${new Date().toLocaleString()}
+
+สรุปวันนี้
+เช็กชื่อแล้ว ${data.length} คน`
     })
   });
 
-  document.getElementById("msg").innerText="เช็กชื่อสำเร็จ";
+  document.getElementById("msg").style.color="var(--success)";
+  document.getElementById("msg").innerText=
+    `เช็กชื่อสำเร็จ วันนี้รวม ${data.length} คน`;
+}
+
+function sendSummary(){
+  let data=getData();
+  fetch(webhook,{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({
+      content:
+`สรุปการเช็กชื่อประจำวัน
+วันที่: ${today()}
+จำนวนผู้เช็กชื่อ: ${data.length} คน
+
+รายชื่อ:
+${data.join("\n")}`
+    })
+  });
+
+  alert("ส่งสรุปวันนี้เข้า Discord แล้ว");
 }
 </script>
 </body>
