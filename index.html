@@ -2,50 +2,100 @@
 <html lang="th">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Weight Training Attendance</title>
+
 <style>
 body{
-  margin:0;min-height:100vh;
-  display:flex;align-items:center;justify-content:center;
+  margin:0;
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
   background:radial-gradient(circle at top,#0f172a,#020617 70%);
-  font-family:system-ui,"Noto Sans Thai",sans-serif;color:#e5e7eb;
+  font-family:system-ui,"Noto Sans Thai",sans-serif;
+  color:#e5e7eb;
 }
 .card{
-  width:360px;padding:26px;border-radius:18px;
-  background:rgba(15,23,42,.75);border:1px solid #1e293b;
+  width:360px;
+  padding:28px;
+  border-radius:20px;
+  background:rgba(15,23,42,.8);
+  border:1px solid #1e293b;
+  box-shadow:0 30px 80px rgba(0,0,0,.5);
 }
-h1{text-align:center;margin:0}
-p{text-align:center;color:#94a3b8;margin:6px 0 18px}
+h1{text-align:center;margin:0;font-size:26px}
+p{text-align:center;color:#94a3b8;margin:6px 0 20px}
 input,button{
-  width:100%;padding:14px;border-radius:12px;
-  border:none;margin-bottom:12px;font-size:16px;
+  width:100%;
+  padding:14px;
+  border-radius:12px;
+  font-size:16px;
+  border:none;
+  margin-bottom:12px;
 }
-input{background:#020617;color:#e5e7eb;border:1px solid #1e293b}
-button{background:#38bdf8;color:#020617;font-weight:600;cursor:pointer}
-button.reset{background:#020617;color:#38bdf8;border:1px solid #38bdf8}
-#msg{text-align:center;min-height:22px}
+input{
+  background:#020617;
+  color:#e5e7eb;
+  border:1px solid #1e293b;
+}
+button{
+  background:#38bdf8;
+  color:#020617;
+  font-weight:600;
+  cursor:pointer;
+}
+button.reset{
+  background:#020617;
+  color:#38bdf8;
+  border:1px solid #38bdf8;
+}
+#msg{
+  text-align:center;
+  min-height:22px;
+  margin-top:8px;
+}
+footer{
+  text-align:center;
+  margin-top:14px;
+  font-size:12px;
+  color:#64748b;
+}
 </style>
 </head>
 
 <body>
 <div class="card">
   <h1>Weight Training</h1>
-  <p>Attendance System</p>
+  <p>Student Attendance System</p>
 
-  <input id="sid" placeholder="รหัสนักเรียน">
-  <button onclick="send({sid:sid.value})">เช็กชื่อ</button>
+  <input id="sid" placeholder="กรอกรหัสนักเรียน">
+  <button onclick="sendStudent()">เช็กชื่อเข้าเรียน</button>
 
-  <hr style="border:0;border-top:1px solid #1e293b">
+  <hr style="border:0;border-top:1px solid #1e293b;margin:16px 0">
 
-  <input id="teacher" type="password" placeholder="รหัสอาจารย์">
-  <button class="reset" onclick="send({teacher:teacher.value})">เริ่มคาบใหม่</button>
+  <input id="teacher" type="password" placeholder="รหัสอาจารย์ (รีเซ็ตคาบ)">
+  <button class="reset" onclick="sendTeacher()">เริ่มคาบใหม่</button>
 
   <div id="msg"></div>
+
+  <footer>
+    Weight Training Club · Satit Chula<br>
+    Secure Attendance System
+  </footer>
 </div>
 
 <script>
-const API_URL ="https://script.google.com/macros/s/AKfycbw4V9rG5V6B1lvxVPPOIX2YeowOf1-z1yFfmEXqEC2-hIgStFYA33uX6Ow-OmG_qXatdQ/exec";
+const API_URL =
+"https://script.google.com/macros/s/AKfycby7LCi2P96VPvUzpbS4TAFhXGKAH1sf1KIGKc3lLoKvpDyxSipRd-0K72nJWjaV7htDTQ/exec";
+
+function sendStudent(){
+  send({ sid: document.getElementById("sid").value });
+}
+
+function sendTeacher(){
+  send({ teacher: document.getElementById("teacher").value });
+}
 
 function send(data){
   document.getElementById("msg").innerText="กำลังส่งข้อมูล...";
@@ -55,8 +105,14 @@ function send(data){
     headers:{ "Content-Type":"application/json" },
     body: JSON.stringify(data)
   })
-  .then(()=> document.getElementById("msg").innerText="ส่งข้อมูลแล้ว")
-  .catch(()=> document.getElementById("msg").innerText="เชื่อมต่อระบบไม่ได้");
+  .then(()=>{
+    document.getElementById("msg").innerText="ส่งข้อมูลแล้ว";
+    document.getElementById("sid").value="";
+    document.getElementById("teacher").value="";
+  })
+  .catch(()=>{
+    document.getElementById("msg").innerText="เชื่อมต่อระบบไม่ได้";
+  });
 }
 </script>
 </body>
