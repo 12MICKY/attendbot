@@ -7,34 +7,31 @@
 
 <style>
 body{
-  margin:0;
-  min-height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
+  margin:0;min-height:100vh;
+  display:flex;justify-content:center;align-items:center;
   background:radial-gradient(circle at top,#0f172a,#020617 70%);
   font-family:system-ui,"Noto Sans Thai",sans-serif;
   color:#e5e7eb;
 }
 .card{
   width:420px;
-  padding:28px;
-  border-radius:22px;
-  background:rgba(15,23,42,.85);
+  padding:32px;
+  border-radius:24px;
+  background:rgba(15,23,42,.9);
   border:1px solid #1e293b;
-  box-shadow:0 30px 80px rgba(0,0,0,.6);
+  box-shadow:0 40px 100px rgba(0,0,0,.7);
 }
-h1{text-align:center;margin:0;font-size:26px}
-p{text-align:center;color:#94a3b8;margin:6px 0 20px}
-select,button{
+h1{text-align:center;margin:0}
+p{text-align:center;color:#94a3b8;margin:8px 0 22px}
+input,select,button{
   width:100%;
   padding:14px;
-  border-radius:12px;
+  border-radius:14px;
   font-size:16px;
   border:none;
-  margin-bottom:12px;
+  margin-bottom:14px;
 }
-select{
+input,select{
   background:#020617;
   color:#e5e7eb;
   border:1px solid #1e293b;
@@ -45,32 +42,22 @@ button{
   font-weight:600;
   cursor:pointer;
 }
-button.reset{
-  background:#020617;
-  color:#38bdf8;
-  border:1px solid #38bdf8;
-}
-#msg{text-align:center;min-height:24px}
-.counter{
-  text-align:center;
-  margin-top:8px;
-  color:#22c55e;
-}
-footer{
-  text-align:center;
-  margin-top:14px;
-  font-size:12px;
-  color:#64748b;
-}
+#msg{text-align:center;min-height:26px}
 </style>
 </head>
 
 <body>
 <div class="card">
   <h1>Weight Training</h1>
-  <p>เช็กชื่อเข้าเรียน</p>
+  <p>Attendance System</p>
 
-  <select id="sid">
+  <!-- กรอกรหัสนักเรียน -->
+  <input id="sidInput" placeholder="กรอกรหัสนักเรียน">
+
+  <div style="text-align:center;color:#64748b">หรือ</div>
+
+  <!-- เลือกชื่อ -->
+  <select id="sidSelect">
     <option value="">-- เลือกชื่อ --</option>
     <option value="68265">เด็กชาย อิวโก้ แมคโอ เทย์</option>
     <option value="68038">เด็กชาย ชินอชิต์ อุดมรัชตะวานิชย์</option>
@@ -98,79 +85,32 @@ footer{
   </select>
 
   <button onclick="checkin()">เช็กชื่อ</button>
-
   <div id="msg"></div>
-  <div class="counter" id="count"></div>
-
-  <hr style="border:0;border-top:1px solid #1e293b;margin:16px 0">
-
-  <button class="reset" onclick="resetAll()">รีเซ็ต (ครู)</button>
-
-  <footer>
-    Weight Training Club · Satit Chula<br>
-    GitHub Pages + Discord Webhook
-  </footer>
 </div>
 
 <script>
-/* ================= CONFIG ================= */
-const DISCORD_WEBHOOK_URL =
-"https://discord.com/api/webhooks/1457278450837749893/RmPQuqqLuGRGVKLep2xRjtp7RM3b32R0c_p-7AVcIkRx8USXNF__tg_Mzk_gkX_0xmy3";
-/* ======================================== */
-
-const checked = JSON.parse(localStorage.getItem("checked") || "{}");
-
-function updateCount(){
-  document.getElementById("count").innerText =
-    "เช็กชื่อแล้ว " + Object.keys(checked).length + " คน";
-}
-
-function sendDiscord(text){
-  fetch(DISCORD_WEBHOOK_URL,{
-    method:"POST",
-    headers:{ "Content-Type":"application/json" },
-    body: JSON.stringify({ content: text })
-  });
-}
+const API_URL = "https://YOUR_WORKER_URL.workers.dev";
 
 function checkin(){
-  const sel = document.getElementById("sid");
-  const sid = sel.value;
-  const name = sel.options[sel.selectedIndex].text;
+  const sid =
+    document.getElementById("sidInput").value.trim() ||
+    document.getElementById("sidSelect").value;
 
   if(!sid){
-    document.getElementById("msg").innerText="กรุณาเลือกชื่อ";
-    return;
-  }
-  if(checked[sid]){
-    document.getElementById("msg").innerText="ชื่อนี้เช็กแล้ว";
+    document.getElementById("msg").innerText = "กรุณากรอกหรือเลือกข้อมูล";
     return;
   }
 
-  checked[sid] = true;
-  localStorage.setItem("checked", JSON.stringify(checked));
-
-  const time = new Date().toLocaleString("th-TH");
-  sendDiscord(
-    "เช็กชื่อเข้าเรียน\n" +
-    "ชื่อ: " + name + "\n" +
-    "รหัส: " + sid + "\n" +
-    "เวลา: " + time
-  );
-
-  document.getElementById("msg").innerText="เช็กชื่อสำเร็จ";
-  updateCount();
+  fetch(API_URL,{
+    method:"POST",
+    headers:{ "Content-Type":"application/json" },
+    body: JSON.stringify({ sid })
+  })
+  .then(r=>r.json())
+  .then(d=>{
+    document.getElementById("msg").innerText = d.msg;
+  });
 }
-
-function resetAll(){
-  if(!confirm("ยืนยันรีเซ็ตข้อมูลทั้งหมด?")) return;
-  localStorage.removeItem("checked");
-  sendDiscord("รีเซ็ตข้อมูลเช็กชื่อ (โดยครู)");
-  document.getElementById("msg").innerText="รีเซ็ตเรียบร้อย";
-  updateCount();
-}
-
-updateCount();
 </script>
 </body>
 </html>
