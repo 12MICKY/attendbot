@@ -3,32 +3,27 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>เช็กชื่อเข้าเรียน</title>
+<title>ระบบเช็กชื่อเข้าเรียน</title>
 
 <style>
 :root{
   --bg:#020617;
-  --card:#020617cc;
+  --card:#020617ee;
   --border:#1e293b;
   --primary:#4fc3ff;
-  --primary-soft:#7dd3fc;
   --text:#e5e7eb;
   --muted:#94a3b8;
   --success:#22c55e;
   --danger:#ef4444;
+  --warn:#facc15;
 }
 
-*{
-  box-sizing:border-box;
-  font-family:"Noto Sans Thai",system-ui,sans-serif;
-}
+*{box-sizing:border-box;font-family:"Noto Sans Thai",system-ui,sans-serif}
 
 body{
   margin:0;
   min-height:100vh;
-  background:
-    radial-gradient(600px at 50% -10%,#0f172a 0%,transparent 60%),
-    linear-gradient(180deg,#020617,#020617);
+  background:radial-gradient(circle at top,#0f172a,#020617 70%);
   display:flex;
   align-items:center;
   justify-content:center;
@@ -36,69 +31,51 @@ body{
 
 .card{
   width:100%;
-  max-width:420px;
+  max-width:440px;
   padding:36px 30px;
   border-radius:22px;
   background:var(--card);
-  backdrop-filter: blur(14px);
   border:1px solid var(--border);
   box-shadow:0 30px 70px rgba(0,0,0,.65);
   text-align:center;
 }
 
-h1{
-  margin:0;
-  font-size:28px;
-  font-weight:700;
-  color:var(--text);
-}
+h1{margin:0;font-size:26px;color:var(--text)}
+h2{margin-top:6px;font-size:14px;color:var(--muted)}
 
-h2{
-  margin-top:6px;
-  font-size:15px;
-  font-weight:500;
-  color:var(--muted);
-}
-
-select{
-  margin-top:22px;
+select,input{
+  margin-top:16px;
   width:100%;
-  padding:16px;
-  font-size:17px;
-  border-radius:16px;
+  padding:15px;
+  font-size:16px;
+  border-radius:14px;
   border:1px solid var(--border);
   background:#020617;
   color:var(--text);
-  outline:none;
-}
-
-select:focus{
-  border-color:var(--primary);
-  box-shadow:0 0 0 2px rgba(79,195,255,.25);
 }
 
 button{
-  margin-top:22px;
+  margin-top:18px;
   width:100%;
-  padding:18px;
-  font-size:20px;
+  padding:16px;
+  font-size:18px;
   font-weight:700;
-  border-radius:18px;
+  border-radius:16px;
   border:none;
   cursor:pointer;
-  background:linear-gradient(135deg,var(--primary),var(--primary-soft));
+  background:linear-gradient(135deg,var(--primary),#7dd3fc);
   color:#020617;
-  box-shadow:0 14px 30px rgba(79,195,255,.4);
-  transition:.15s;
 }
 
-button:active{
-  transform:scale(.98);
+button.secondary{
+  background:#020617;
+  color:var(--primary);
+  border:1px solid var(--primary);
 }
 
 #msg{
-  margin-top:18px;
-  font-size:16px;
+  margin-top:16px;
+  font-size:15px;
   font-weight:600;
 }
 
@@ -115,65 +92,101 @@ button:active{
   <h1>เช็กชื่อเข้าเรียน</h1>
   <h2>ชมรม Weight Training</h2>
 
-  <select id="name">
+  <!-- นักเรียน -->
+  <select id="student">
     <option value="">— เลือกชื่อของคุณ —</option>
-    <option>เด็กชาย อิฏิไก แมคโอ เทย์</option>
-    <option>เด็กชาย ชินวดี อุดมรัตนะวนิชย์</option>
-    <option>เด็กชาย พชรเดช พิริยะสว่างพงศ์</option>
-    <option>เด็กชาย นวธี วีระวงศกร</option>
-    <option>เด็กชาย ศรวิน บรรลุทรัพย์</option>
-    <option>เด็กชาย ณพล ตั้งจารุนศิริ</option>
-    <option>เด็กชาย ณัฏธนันท์ กฤษฎามาศ</option>
-    <option>เด็กชาย สิทธิญาณ แสงสุริยไทย</option>
-    <option>เด็กชาย เสฎฐพงศ์ มหัทธนกุล</option>
-    <option>เด็กชาย พัสกร วัชระประไพพันธ์</option>
-    <option>เด็กชาย ธนากร แดงนภาพรกุล</option>
-    <option>เด็กชาย ธัญสิริ พระยาน้อย</option>
-    <option>เด็กชาย ปรัตถกร โสราช</option>
-    <option>นาย ชลภัทร เทศสกุลวงศ์</option>
-    <option>นาย ศศะ คะชิมา</option>
-    <option>นาย ชยกฤช ถาวรพานิช</option>
-    <option>นาย ธีรภัทร ศรีจิตร</option>
-    <option>นาย นิธิศ กุลไชย</option>
-    <option>นาย ปภังกร โอกาประกาศิต</option>
-    <option>นาย ธิป ตั้งศิริพัฒน์</option>
-    <option>นาย ปกป้อง โพธิ์จักร</option>
-    <option>นาย สรัล อัสสะบำรุงรัตน์</option>
-    <option>นาย ศุภลิน ชื่นไพโรจน์</option>
+
+    <option value="68265">เด็กชาย อิฏิไก แมคโอ เทย์</option>
+    <option value="68038">เด็กชาย ชินวดี อุดมรัตนะวนิชย์</option>
+    <option value="68169">เด็กชาย พชรเดช พิริยะสว่างพงศ์</option>
+    <option value="68115">เด็กชาย นวธี วีระวงศกร</option>
+    <option value="67229">เด็กชาย ศรวิน บรรลุทรัพย์</option>
+    <option value="67065">เด็กชาย ณพล ตั้งจารุนศิริ</option>
+    <option value="67073">เด็กชาย ณัฏธนันท์ กฤษฎามาศ</option>
+    <option value="67240">เด็กชาย สิทธิญาณ แสงสุริยไทย</option>
+    <option value="67249">เด็กชาย เสฎฐพงศ์ มหัทธนกุล</option>
+    <option value="67160">เด็กชาย พัสกร วัชระประไพพันธ์</option>
+    <option value="66233">เด็กชาย ธนากร แดงนภาพรกุล</option>
+    <option value="65097">เด็กชาย ธัญสิริ พระยาน้อย</option>
+    <option value="65119">เด็กชาย ปรัตถกร โสราช</option>
+
+    <option value="64029">นาย ชลภัทร เทศสกุลวงศ์</option>
+    <option value="64182">นาย ศศะ คะชิมา</option>
+    <option value="64024">นาย ชยกฤช ถาวรพานิช</option>
+    <option value="64094">นาย ธีรภัทร ศรีจิตร</option>
+    <option value="64100">นาย นิธิศ กุลไชย</option>
+    <option value="64110">นาย ปภังกร โอกาประกาศิต</option>
+    <option value="64089">นาย ธิป ตั้งศิริพัฒน์</option>
+    <option value="63106">นาย ปกป้อง โพธิ์จักร</option>
+    <option value="63222">นาย สรัล อัสสะบำรุงรัตน์</option>
+    <option value="63219">นาย ศุภลิน ชื่นไพโรจน์</option>
   </select>
 
+  <input id="sid" type="password" placeholder="กรอกรหัสนักเรียน">
   <button onclick="checkin()">เช็กชื่อ</button>
 
+  <!-- อาจารย์ -->
+  <hr style="margin:22px 0;border-color:#1e293b">
+
+  <input id="teacher" type="password" placeholder="รหัสอาจารย์">
+  <button class="secondary" onclick="resetSystem()">เริ่มคาบใหม่ (อาจารย์)</button>
+
   <div id="msg"></div>
-  <div class="footer">AttendBot • Student Check-in</div>
+  <div class="footer">AttendBot • Ultimate Secure Mode</div>
 </div>
 
 <script>
 const webhook = "https://discordapp.com/api/webhooks/1457278450837749893/RmPQuqqLuGRGVKLep2xRjtp7RM3b32R0c_p-7AVcIkRx8USXNF__tg_Mzk_gkX_0xmy3";
+const TEACHER_CODE = "tHKGaAPN22Epz2";
+const CHECKIN_MINUTES = 10;
 
-function today(){
-  const d=new Date();
-  return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+function now(){ return new Date(); }
+function today(){ const d=now(); return d.toISOString().slice(0,10); }
+function key(){ return "attend-"+today(); }
+function timeKey(){ return "start-"+today(); }
+
+function isOpen(){
+  const start = localStorage.getItem(timeKey());
+  if(!start) return false;
+  return (now()-new Date(start))/60000 <= CHECKIN_MINUTES;
+}
+
+function startSession(){
+  localStorage.setItem(timeKey(), now());
 }
 
 function getData(){
-  return JSON.parse(localStorage.getItem("attend-"+today())||"[]");
+  return JSON.parse(localStorage.getItem(key())||"[]");
 }
 
 function saveData(data){
-  localStorage.setItem("attend-"+today(),JSON.stringify(data));
+  localStorage.setItem(key(), JSON.stringify(data));
 }
 
 function checkin(){
-  const name=document.getElementById("name").value;
-  if(!name){
-    show("กรุณาเลือกชื่อของคุณ","var(--danger)");
+  if(!isOpen()){
+    show("หมดเวลาเช็กชื่อแล้ว","var(--warn)");
+    return;
+  }
+
+  const sel=document.getElementById("student");
+  const sid=document.getElementById("sid").value.trim();
+  const name=sel.options[sel.selectedIndex]?.text;
+  const correctSid=sel.value;
+
+  if(!correctSid || !sid){
+    show("กรุณาเลือกชื่อและกรอกรหัสนักเรียน","var(--danger)");
+    return;
+  }
+
+  if(sid!==correctSid){
+    show("รหัสนักเรียนไม่ถูกต้อง","var(--danger)");
     return;
   }
 
   let data=getData();
   if(data.includes(name)){
-    show("คุณเช็กชื่อไปแล้ววันนี้","var(--danger)");
+    show("คุณเช็กชื่อไปแล้ว","var(--danger)");
     return;
   }
 
@@ -187,14 +200,35 @@ function checkin(){
       content:
 `เช็กชื่อเข้าเรียน
 ชื่อ: ${name}
-เวลา: ${new Date().toLocaleString()}
-
-สรุปวันนี้
-เช็กชื่อแล้ว ${data.length} คน`
+เวลา: ${now().toLocaleString()}
+จำนวนปัจจุบัน: ${data.length} คน`
     })
   });
 
-  show("เช็กชื่อสำเร็จ ขอบคุณครับ","var(--success)");
+  show("เช็กชื่อสำเร็จ","var(--success)");
+}
+
+function resetSystem(){
+  const t=document.getElementById("teacher").value.trim();
+  if(t!==TEACHER_CODE){
+    show("รหัสอาจารย์ไม่ถูกต้อง","var(--danger)");
+    return;
+  }
+
+  localStorage.removeItem(key());
+  startSession();
+
+  fetch(webhook,{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({
+      content:
+`เริ่มคาบใหม่โดยอาจารย์
+เปิดให้เช็กชื่อ ${CHECKIN_MINUTES} นาที`
+    })
+  });
+
+  show("เริ่มคาบใหม่แล้ว","var(--success)");
 }
 
 function show(text,color){
