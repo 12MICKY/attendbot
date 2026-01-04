@@ -3,53 +3,27 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Weight Training | Attendance</title>
-
+<title>Weight Training Attendance</title>
 <style>
 body{
-  margin:0;
-  min-height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  margin:0;min-height:100vh;
+  display:flex;align-items:center;justify-content:center;
   background:radial-gradient(circle at top,#0f172a,#020617 70%);
-  font-family:system-ui,"Noto Sans Thai",sans-serif;
-  color:#e5e7eb;
+  font-family:system-ui,"Noto Sans Thai",sans-serif;color:#e5e7eb;
 }
 .card{
-  width:360px;
-  padding:26px;
-  border-radius:18px;
-  background:rgba(15,23,42,.75);
-  border:1px solid #1e293b;
-  box-shadow:0 25px 60px rgba(0,0,0,.6);
+  width:360px;padding:26px;border-radius:18px;
+  background:rgba(15,23,42,.75);border:1px solid #1e293b;
 }
 h1{text-align:center;margin:0}
 p{text-align:center;color:#94a3b8;margin:6px 0 18px}
 input,button{
-  width:100%;
-  padding:14px;
-  border-radius:12px;
-  border:none;
-  font-size:16px;
-  margin-bottom:12px;
+  width:100%;padding:14px;border-radius:12px;
+  border:none;margin-bottom:12px;font-size:16px;
 }
-input{
-  background:#020617;
-  color:#e5e7eb;
-  border:1px solid #1e293b;
-}
-button{
-  background:#38bdf8;
-  color:#020617;
-  font-weight:600;
-  cursor:pointer;
-}
-button.reset{
-  background:#020617;
-  color:#38bdf8;
-  border:1px solid #38bdf8;
-}
+input{background:#020617;color:#e5e7eb;border:1px solid #1e293b}
+button{background:#38bdf8;color:#020617;font-weight:600;cursor:pointer}
+button.reset{background:#020617;color:#38bdf8;border:1px solid #38bdf8}
 #msg{text-align:center;min-height:22px}
 </style>
 </head>
@@ -57,40 +31,31 @@ button.reset{
 <body>
 <div class="card">
   <h1>Weight Training</h1>
-  <p>Student Attendance</p>
+  <p>Attendance System</p>
 
   <input id="sid" placeholder="รหัสนักเรียน">
-  <button onclick="checkin()">เช็กชื่อ</button>
+  <button onclick="send({sid:sid.value})">เช็กชื่อ</button>
 
-  <hr style="border:0;border-top:1px solid #1e293b;margin:14px 0">
+  <hr style="border:0;border-top:1px solid #1e293b">
 
   <input id="teacher" type="password" placeholder="รหัสอาจารย์">
-  <button class="reset" onclick="resetSystem()">เริ่มคาบใหม่</button>
+  <button class="reset" onclick="send({teacher:teacher.value})">เริ่มคาบใหม่</button>
 
   <div id="msg"></div>
 </div>
 
 <script>
-const API_URL =
-"https://script.google.com/macros/s/AKfycbx8fEgU6S6GzeFUMkId-oSeom-zxbVLaMR3k02y-anvHcw-CxYVv310-kaniVSTlmNcCQ/exec";
+const API_URL ="https://script.google.com/macros/s/AKfycbw4V9rG5V6B1lvxVPPOIX2YeowOf1-z1yFfmEXqEC2-hIgStFYA33uX6Ow-OmG_qXatdQ/exec";
 
-function checkin(){
-  send({ sid: document.getElementById("sid").value.trim() });
-}
-
-function resetSystem(){
-  send({ teacher: document.getElementById("teacher").value.trim() });
-}
-
-function send(payload){
+function send(data){
   document.getElementById("msg").innerText="กำลังส่งข้อมูล...";
   fetch(API_URL,{
     method:"POST",
     mode:"no-cors",
     headers:{ "Content-Type":"application/json" },
-    body: JSON.stringify(payload)
+    body: JSON.stringify(data)
   })
-  .then(()=> document.getElementById("msg").innerText="ส่งข้อมูลเรียบร้อย")
+  .then(()=> document.getElementById("msg").innerText="ส่งข้อมูลแล้ว")
   .catch(()=> document.getElementById("msg").innerText="เชื่อมต่อระบบไม่ได้");
 }
 </script>
