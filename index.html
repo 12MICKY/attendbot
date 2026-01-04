@@ -7,8 +7,7 @@
 
 <style>
 :root{
-  --bg1:#020617;
-  --bg2:#020617;
+  --bg:#020617;
   --card:#020617cc;
   --border:#1e293b;
   --primary:#4fc3ff;
@@ -29,7 +28,6 @@ body{
   min-height:100vh;
   background:
     radial-gradient(600px at 50% -10%,#0f172a 0%,transparent 60%),
-    radial-gradient(800px at 80% 110%,#020617 0%,transparent 70%),
     linear-gradient(180deg,#020617,#020617);
   display:flex;
   align-items:center;
@@ -39,30 +37,23 @@ body{
 .card{
   width:100%;
   max-width:420px;
-  padding:34px 30px;
+  padding:36px 30px;
   border-radius:22px;
   background:var(--card);
   backdrop-filter: blur(14px);
   border:1px solid var(--border);
-  box-shadow:
-    0 30px 70px rgba(0,0,0,.65),
-    inset 0 1px 0 rgba(255,255,255,.03);
+  box-shadow:0 30px 70px rgba(0,0,0,.65);
   text-align:center;
 }
 
-.header{
-  margin-bottom:24px;
-}
-
-.header h1{
+h1{
   margin:0;
   font-size:28px;
   font-weight:700;
   color:var(--text);
-  letter-spacing:.3px;
 }
 
-.header h2{
+h2{
   margin-top:6px;
   font-size:15px;
   font-weight:500;
@@ -70,15 +61,15 @@ body{
 }
 
 select{
+  margin-top:22px;
   width:100%;
-  padding:14px 16px;
-  font-size:16px;
-  border-radius:14px;
+  padding:16px;
+  font-size:17px;
+  border-radius:16px;
   border:1px solid var(--border);
   background:#020617;
   color:var(--text);
   outline:none;
-  transition:.2s;
 }
 
 select:focus{
@@ -86,48 +77,28 @@ select:focus{
   box-shadow:0 0 0 2px rgba(79,195,255,.25);
 }
 
-.actions{
-  margin-top:22px;
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-}
-
 button{
+  margin-top:22px;
   width:100%;
-  padding:14px;
-  font-size:17px;
-  font-weight:600;
-  border-radius:16px;
-  cursor:pointer;
+  padding:18px;
+  font-size:20px;
+  font-weight:700;
+  border-radius:18px;
   border:none;
-  transition:.2s;
-}
-
-.btn-main{
+  cursor:pointer;
   background:linear-gradient(135deg,var(--primary),var(--primary-soft));
   color:#020617;
-  box-shadow:0 10px 25px rgba(79,195,255,.35);
+  box-shadow:0 14px 30px rgba(79,195,255,.4);
+  transition:.15s;
 }
 
-.btn-main:hover{
-  transform:translateY(-1px);
-  box-shadow:0 16px 35px rgba(79,195,255,.45);
-}
-
-.btn-summary{
-  background:transparent;
-  color:var(--primary);
-  border:1px solid var(--primary);
-}
-
-.btn-summary:hover{
-  background:rgba(79,195,255,.08);
+button:active{
+  transform:scale(.98);
 }
 
 #msg{
   margin-top:18px;
-  font-size:15px;
+  font-size:16px;
   font-weight:600;
 }
 
@@ -141,13 +112,11 @@ button{
 
 <body>
 <div class="card">
-  <div class="header">
-    <h1>เช็กชื่อเข้าเรียน</h1>
-    <h2>ชมรม Weight Training</h2>
-  </div>
+  <h1>เช็กชื่อเข้าเรียน</h1>
+  <h2>ชมรม Weight Training</h2>
 
   <select id="name">
-    <option value="">— เลือกชื่อ —</option>
+    <option value="">— เลือกชื่อของคุณ —</option>
     <option>เด็กชาย อิฏิไก แมคโอ เทย์</option>
     <option>เด็กชาย ชินวดี อุดมรัตนะวนิชย์</option>
     <option>เด็กชาย พชรเดช พิริยะสว่างพงศ์</option>
@@ -173,13 +142,10 @@ button{
     <option>นาย ศุภลิน ชื่นไพโรจน์</option>
   </select>
 
-  <div class="actions">
-    <button class="btn-main" onclick="checkin()">เช็กชื่อ</button>
-    <button class="btn-summary" onclick="sendSummary()">สรุปวันนี้ (ครู)</button>
-  </div>
+  <button onclick="checkin()">เช็กชื่อ</button>
 
   <div id="msg"></div>
-  <div class="footer">AttendBot • QR Attendance System</div>
+  <div class="footer">AttendBot • Student Check-in</div>
 </div>
 
 <script>
@@ -200,11 +166,14 @@ function saveData(data){
 
 function checkin(){
   const name=document.getElementById("name").value;
-  if(!name){alert("กรุณาเลือกชื่อ");return;}
+  if(!name){
+    show("กรุณาเลือกชื่อของคุณ","var(--danger)");
+    return;
+  }
 
   let data=getData();
   if(data.includes(name)){
-    msg("คุณเช็กชื่อไปแล้ววันนี้","var(--danger)");
+    show("คุณเช็กชื่อไปแล้ววันนี้","var(--danger)");
     return;
   }
 
@@ -225,28 +194,10 @@ function checkin(){
     })
   });
 
-  msg(`เช็กชื่อสำเร็จ วันนี้รวม ${data.length} คน`,"var(--success)");
+  show("เช็กชื่อสำเร็จ ขอบคุณครับ","var(--success)");
 }
 
-function sendSummary(){
-  const data=getData();
-  fetch(webhook,{
-    method:"POST",
-    headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({
-      content:
-`สรุปการเช็กชื่อประจำวัน
-วันที่: ${today()}
-จำนวนผู้เช็กชื่อ: ${data.length} คน
-
-รายชื่อ:
-${data.join("\n")}`
-    })
-  });
-  alert("ส่งสรุปวันนี้เข้า Discord แล้ว");
-}
-
-function msg(text,color){
+function show(text,color){
   const m=document.getElementById("msg");
   m.style.color=color;
   m.innerText=text;
