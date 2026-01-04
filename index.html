@@ -5,111 +5,227 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Weight Training Attendance</title>
 
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
 <style>
+:root{
+  --bg:#020617;
+  --panel:#0f172a;
+  --panel-2:#020617;
+  --border:#1e293b;
+  --text:#e5e7eb;
+  --muted:#94a3b8;
+  --accent:#38bdf8;
+  --success:#22c55e;
+}
+
+*{box-sizing:border-box}
 body{
-  margin:0;min-height:100vh;
-  display:flex;justify-content:center;align-items:center;
-  background:radial-gradient(circle at top,#0f172a,#020617 70%);
-  font-family:system-ui,"Noto Sans Thai",sans-serif;
-  color:#e5e7eb;
+  margin:0;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:
+    radial-gradient(1200px 500px at top,#0f172a,#020617 70%);
+  font-family:Inter,system-ui,"Noto Sans Thai",sans-serif;
+  color:var(--text);
 }
-.card{
-  width:420px;
-  padding:32px;
-  border-radius:24px;
-  background:rgba(15,23,42,.9);
-  border:1px solid #1e293b;
-  box-shadow:0 40px 100px rgba(0,0,0,.7);
-}
-h1{text-align:center;margin:0}
-p{text-align:center;color:#94a3b8;margin:8px 0 22px}
-input,select,button{
+
+.app{
   width:100%;
-  padding:14px;
-  border-radius:14px;
-  font-size:16px;
-  border:none;
+  max-width:420px;
+  padding:28px;
+}
+
+.card{
+  background:linear-gradient(
+    180deg,
+    rgba(15,23,42,.95),
+    rgba(2,6,23,.95)
+  );
+  border:1px solid var(--border);
+  border-radius:24px;
+  padding:28px;
+  box-shadow:
+    0 40px 100px rgba(0,0,0,.65),
+    inset 0 1px 0 rgba(255,255,255,.03);
+}
+
+.header{
+  text-align:center;
+  margin-bottom:24px;
+}
+.header h1{
+  margin:0;
+  font-size:26px;
+  font-weight:700;
+  letter-spacing:.3px;
+}
+.header p{
+  margin:6px 0 0;
+  font-size:14px;
+  color:var(--muted);
+}
+
+.field{
   margin-bottom:14px;
 }
-input,select{
-  background:#020617;
-  color:#e5e7eb;
-  border:1px solid #1e293b;
+.field input,
+.field select{
+  width:100%;
+  padding:16px 16px;
+  border-radius:14px;
+  border:1px solid var(--border);
+  background:var(--panel-2);
+  color:var(--text);
+  font-size:16px;
 }
-button{
-  background:#38bdf8;
-  color:#020617;
+.field input::placeholder{
+  color:#64748b;
+}
+
+.or{
+  text-align:center;
+  font-size:13px;
+  color:var(--muted);
+  margin:10px 0;
+}
+
+.btn{
+  width:100%;
+  padding:16px;
+  border-radius:14px;
+  border:none;
+  font-size:16px;
   font-weight:600;
   cursor:pointer;
+  background:linear-gradient(180deg,#38bdf8,#0ea5e9);
+  color:#020617;
+  box-shadow:
+    0 10px 30px rgba(56,189,248,.35);
 }
-#msg{text-align:center;min-height:26px}
+.btn:active{
+  transform:translateY(1px);
+}
+
+.msg{
+  margin-top:18px;
+  text-align:center;
+  font-size:15px;
+  min-height:22px;
+}
+.msg.success{
+  color:var(--success);
+}
+
+.footer{
+  margin-top:20px;
+  text-align:center;
+  font-size:12px;
+  color:#64748b;
+}
 </style>
 </head>
 
 <body>
-<div class="card">
-  <h1>Weight Training</h1>
-  <p>Attendance System</p>
+<div class="app">
+  <div class="card">
 
-  <!-- กรอกรหัสนักเรียน -->
-  <input id="sidInput" placeholder="กรอกรหัสนักเรียน">
+    <div class="header">
+      <h1>Weight Training</h1>
+      <p>Attendance System</p>
+    </div>
 
-  <div style="text-align:center;color:#64748b">หรือ</div>
+    <!-- กรอกรหัส -->
+    <div class="field">
+      <input id="sidInput" placeholder="กรอกรหัสนักเรียน">
+    </div>
 
-  <!-- เลือกชื่อ -->
-  <select id="sidSelect">
-    <option value="">-- เลือกชื่อ --</option>
-    <option value="68265">เด็กชาย อิวโก้ แมคโอ เทย์</option>
-    <option value="68038">เด็กชาย ชินอชิต์ อุดมรัชตะวานิชย์</option>
-    <option value="68169">เด็กชาย พิชณุตม์ พิริยะสงวนพงศ์</option>
-    <option value="68115">เด็กชาย นาวี วีระวงศกร</option>
-    <option value="67229">เด็กชาย ศราวิน บรรลุทรัพย์</option>
-    <option value="67065">เด็กชาย ณพล ตั้งจาตุรนต์รัศที</option>
-    <option value="67073">เด็กชาย ณัฏธนันท์ กฤษฎาภค</option>
-    <option value="67240">เด็กชาย สิกาญจน์ แสงสุริยไทย</option>
-    <option value="67249">เด็กชาย เสฎฐพงศ์ มหัทธนกุล</option>
-    <option value="67160">เด็กชาย พัสกรณ์ วัชระประไพพันธ์</option>
-    <option value="66233">เด็กชาย ธนากร แดงนภาพรกุล</option>
-    <option value="65097">เด็กชาย ธัญสิริ พระยาน้อย</option>
-    <option value="65119">เด็กชาย ปรัตถกร โสราช</option>
-    <option value="64029">นาย ชลภัทร เทศสกุลวงศ์</option>
-    <option value="64182">นาย ศศะ คะชิมา</option>
-    <option value="64024">นาย ชยกฤช ถาวรพานิช</option>
-    <option value="64094">นาย ธีรภัทร ศรีจิตร</option>
-    <option value="64100">นาย นิธิศ กุลไชย</option>
-    <option value="64110">นาย ปภังกร โอกาประกาศิต</option>
-    <option value="64089">นาย ธิปก ตั้งศิริพัฒน์</option>
-    <option value="63106">นาย ปกป้อง โพธิ์จักร</option>
-    <option value="63222">นาย สรัล อัสสะบำรุงรัตน์</option>
-    <option value="63219">นาย ศุภลิน ชื่นไพโรจน์</option>
-  </select>
+    <div class="or">หรือเลือกชื่อ</div>
 
-  <button onclick="checkin()">เช็กชื่อ</button>
-  <div id="msg"></div>
+    <!-- เลือกชื่อ -->
+    <div class="field">
+      <select id="sidSelect">
+        <option value="">-- เลือกชื่อ --</option>
+        <option value="68265">เด็กชาย อิวโก้ แมคโอ เทย์</option>
+        <option value="68038">เด็กชาย ชินอชิต์ อุดมรัชตะวานิชย์</option>
+        <option value="68169">เด็กชาย พิชณุตม์ พิริยะสงวนพงศ์</option>
+        <option value="68115">เด็กชาย นาวี วีระวงศกร</option>
+        <option value="67229">เด็กชาย ศราวิน บรรลุทรัพย์</option>
+        <option value="67065">เด็กชาย ณพล ตั้งจาตุรนต์รัศที</option>
+        <option value="67073">เด็กชาย ณัฏธนันท์ กฤษฎาภค</option>
+        <option value="67240">เด็กชาย สิกาญจน์ แสงสุริยไทย</option>
+        <option value="67249">เด็กชาย เสฎฐพงศ์ มหัทธนกุล</option>
+        <option value="67160">เด็กชาย พัสกรณ์ วัชระประไพพันธ์</option>
+        <option value="66233">เด็กชาย ธนากร แดงนภาพรกุล</option>
+        <option value="65097">เด็กชาย ธัญสิริ พระยาน้อย</option>
+        <option value="65119">เด็กชาย ปรัตถกร โสราช</option>
+        <option value="64029">นาย ชลภัทร เทศสกุลวงศ์</option>
+        <option value="64182">นาย ศศะ คะชิมา</option>
+        <option value="64024">นาย ชยกฤช ถาวรพานิช</option>
+        <option value="64094">นาย ธีรภัทร ศรีจิตร</option>
+        <option value="64100">นาย นิธิศ กุลไชย</option>
+        <option value="64110">นาย ปภังกร โอกาประกาศิต</option>
+        <option value="64089">นาย ธิปก ตั้งศิริพัฒน์</option>
+        <option value="63106">นาย ปกป้อง โพธิ์จักร</option>
+        <option value="63222">นาย สรัล อัสสะบำรุงรัตน์</option>
+        <option value="63219">นาย ศุภลิน ชื่นไพโรจน์</option>
+      </select>
+    </div>
+
+    <button class="btn" onclick="checkin()">เช็กชื่อเข้าเรียน</button>
+
+    <div id="msg" class="msg"></div>
+
+    <div class="footer">
+      Weight Training Club · Satit Chula
+    </div>
+
+  </div>
 </div>
 
 <script>
-const API_URL = "https://YOUR_WORKER_URL.workers.dev";
+const DISCORD_WEBHOOK_URL =
+"https://discord.com/api/webhooks/1457278450837749893/RmPQuqqLuGRGVKLep2xRjtp7RM3b32R0c_p-7AVcIkRx8USXNF__tg_Mzk_gkX_0xmy3";
 
 function checkin(){
-  const sid =
-    document.getElementById("sidInput").value.trim() ||
-    document.getElementById("sidSelect").value;
+  const input = document.getElementById("sidInput").value.trim();
+  const select = document.getElementById("sidSelect");
+  const sid = input || select.value;
 
   if(!sid){
-    document.getElementById("msg").innerText = "กรุณากรอกหรือเลือกข้อมูล";
+    showMsg("กรุณากรอกรหัสหรือเลือกชื่อ");
     return;
   }
 
-  fetch(API_URL,{
+  const name = input
+    ? "รหัสนักเรียน: " + input
+    : select.options[select.selectedIndex].text;
+
+  const time = new Date().toLocaleString("th-TH");
+
+  fetch(DISCORD_WEBHOOK_URL,{
     method:"POST",
     headers:{ "Content-Type":"application/json" },
-    body: JSON.stringify({ sid })
-  })
-  .then(r=>r.json())
-  .then(d=>{
-    document.getElementById("msg").innerText = d.msg;
+    body: JSON.stringify({
+      content:
+        "เช็กชื่อเข้าเรียน\n" +
+        name + "\n" +
+        "เวลา: " + time
+    })
   });
+
+  showMsg("เช็กชื่อเรียบร้อย", true);
+  document.getElementById("sidInput").value="";
+  select.value="";
+}
+
+function showMsg(text, ok){
+  const el = document.getElementById("msg");
+  el.innerText = text;
+  el.className = "msg" + (ok ? " success" : "");
 }
 </script>
 </body>
