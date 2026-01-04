@@ -2,147 +2,58 @@
 <html lang="th">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Weight Training | Satit Chula</title>
-
+<title>Weight Training Attendance</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;600;700;800&display=swap');
-
-:root{
-  --bg:#020617;
-  --card:#020617f2;
-  --border:#1e293b;
-  --primary:#4fc3ff;
-  --primary-strong:#22d3ee;
-  --text:#f1f5f9;
-  --muted:#94a3b8;
-  --success:#22c55e;
-  --danger:#ef4444;
-  --warn:#facc15;
-}
-
-*{
-  box-sizing:border-box;
-  font-family:'Noto Sans Thai',system-ui,sans-serif;
-}
-
 body{
   margin:0;
   min-height:100vh;
-  background:
-    radial-gradient(900px circle at top,#0f172a 0%,#020617 65%);
   display:flex;
   align-items:center;
   justify-content:center;
-  padding:24px;
+  background:radial-gradient(circle at top,#0f172a,#020617 70%);
+  color:#e5e7eb;
+  font-family:system-ui,"Noto Sans Thai",sans-serif;
 }
-
 .card{
-  width:100%;
-  max-width:460px;
-  padding:44px 36px;
-  border-radius:28px;
-  background:
-    linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,0)),
-    var(--card);
-  border:1px solid rgba(148,163,184,.15);
-  box-shadow:
-    0 60px 120px rgba(0,0,0,.85),
-    inset 0 1px 0 rgba(255,255,255,.05);
-  backdrop-filter: blur(14px);
-}
-
-.header{
-  text-align:center;
-  margin-bottom:34px;
-}
-
-.header .school{
-  font-size:13px;
-  letter-spacing:.6px;
-  color:var(--muted);
-}
-
-.header h1{
-  margin:10px 0 4px;
-  font-size:34px;
-  font-weight:800;
-  letter-spacing:.5px;
-  color:var(--text);
-}
-
-.header h2{
-  margin:0;
-  font-size:15px;
-  font-weight:500;
-  color:var(--primary);
-}
-
-.label{
-  margin-top:22px;
-  font-size:14px;
-  color:var(--muted);
-}
-
-select,input{
-  width:100%;
-  margin-top:12px;
-  padding:18px;
-  font-size:16px;
+  width:360px;
+  padding:28px;
   border-radius:18px;
-  border:1px solid rgba(148,163,184,.18);
-  background:rgba(2,6,23,.9);
-  color:var(--text);
-  outline:none;
+  background:rgba(15,23,42,.75);
+  box-shadow:0 20px 60px rgba(0,0,0,.5);
 }
-
-select:focus,input:focus{
-  border-color:var(--primary);
-  box-shadow:0 0 0 3px rgba(79,195,255,.18);
-}
-
-button{
+h1{margin:0 0 6px;text-align:center}
+p{margin:0 0 20px;text-align:center;color:#94a3b8}
+input,button{
   width:100%;
-  margin-top:22px;
-  padding:20px;
-  font-size:20px;
-  font-weight:800;
-  border-radius:22px;
+  padding:14px;
+  border-radius:12px;
   border:none;
-  cursor:pointer;
-  background:
-    linear-gradient(135deg,var(--primary),var(--primary-strong));
+  outline:none;
+  margin-bottom:12px;
+  font-size:16px;
+}
+input{
+  background:#020617;
+  color:#e5e7eb;
+  border:1px solid #1e293b;
+}
+button{
+  background:#38bdf8;
   color:#020617;
-  box-shadow:0 12px 30px rgba(56,189,248,.45);
-  transition:.25s;
+  font-weight:600;
+  cursor:pointer;
 }
-
-button:hover{
-  transform:translateY(-2px);
-  box-shadow:0 18px 40px rgba(56,189,248,.55);
-}
-
 button.secondary{
-  background:transparent;
-  color:var(--primary);
-  border:1px solid var(--primary);
-  box-shadow:none;
+  background:#020617;
+  color:#38bdf8;
+  border:1px solid #38bdf8;
 }
-
-.divider{
-  margin:34px 0;
-  border-top:1px solid rgba(148,163,184,.15);
-}
-
 #msg{
-  margin-top:18px;
-  font-size:15px;
-  font-weight:700;
   text-align:center;
+  margin-top:10px;
 }
-
 .footer{
-  margin-top:30px;
+  margin-top:18px;
   text-align:center;
   font-size:12px;
   color:#64748b;
@@ -152,164 +63,47 @@ button.secondary{
 
 <body>
 <div class="card">
+  <h1>Weight Training</h1>
+  <p>Student Attendance System</p>
 
-  <div class="header">
-    <div class="school">
-      โรงเรียนสาธิตจุฬาลงกรณ์มหาวิทยาลัย ฝ่ายมัธยม
-    </div>
-    <h1>Weight Training</h1>
-    <h2>Student Attendance System</h2>
-  </div>
-
-  <!-- นักเรียน -->
-  <div class="label">นักเรียน</div>
-  <select id="student">
-    <option value="">— เลือกชื่อของคุณ —</option>
-
-    <option value="68265">เด็กชาย อิวโก้ แมคโอ เทย์</option>
-    <option value="68038">เด็กชาย ชินอชิต์ อุดมรัชตะวานิชย์</option>
-    <option value="68169">เด็กชาย พิชณุตม์ พิริยะสงวนพงศ์</option>
-    <option value="68115">เด็กชาย นาวี วีระวงศกร</option>
-    <option value="67229">เด็กชาย ศราวิน บรรลุทรัพย์</option>
-    <option value="67065">เด็กชาย ณพล ตั้งจาตุรนต์รัศที</option>
-    <option value="67073">เด็กชาย ณัฏธนันท์ กฤษฎาภค</option>
-    <option value="67240">เด็กชาย สิกาญจน์ แสงสุริยไทย</option>
-    <option value="67249">เด็กชาย เสฎฐพงศ์ มหัทธนกุล</option>
-    <option value="67160">เด็กชาย พัสกรณ์ วัชระประไพพันธ์</option>
-    <option value="66233">เด็กชาย ธนากร แดงนภาพรกุล</option>
-    <option value="65097">เด็กชาย ธัญสิริ พระยาน้อย</option>
-    <option value="65119">เด็กชาย ปรัตถกร โสราช</option>
-
-    <option value="64029">นาย ชลภัทร เทศสกุลวงศ์</option>
-    <option value="64182">นาย ศศะ คะชิมา</option>
-    <option value="64024">นาย ชยกฤช ถาวรพานิช</option>
-    <option value="64094">นาย ธีรภัทร ศรีจิตร</option>
-    <option value="64100">นาย นิธิศ กุลไชย</option>
-    <option value="64110">นาย ปภังกร โอกาประกาศิต</option>
-    <option value="64089">นาย ธิปก ตั้งศิริพัฒน์</option>
-    <option value="63106">นาย ปกป้อง โพธิ์จักร</option>
-    <option value="63222">นาย สรัล อัสสะบำรุงรัตน์</option>
-    <option value="63219">นาย ศุภลิน ชื่นไพโรจน์</option>
-  </select>
-
-  <input id="sid" type="password" placeholder="กรอกรหัสนักเรียน">
+  <input id="sid" placeholder="กรอกรหัสนักเรียน">
   <button onclick="checkin()">เช็กชื่อเข้าเรียน</button>
 
-  <div class="divider"></div>
+  <hr style="border:none;border-top:1px solid #1e293b;margin:16px 0">
 
-  <!-- อาจารย์ -->
-  <div class="label">อาจารย์ผู้ดูแล</div>
   <input id="teacher" type="password" placeholder="รหัสอาจารย์">
   <button class="secondary" onclick="resetSystem()">เริ่มคาบใหม่</button>
 
   <div id="msg"></div>
 
   <div class="footer">
-    Weight Training Club • Satit Chula<br>
+    Weight Training Club • Satit Chula
   </div>
-
 </div>
 
 <script>
-/* ===== CONFIG ===== */
-const DISCORD_WEBHOOK = "https://discord.com/api/webhooks/1457278450837749893/RmPQuqqLuGRGVKLep2xRjtp7RM3b32R0c_p-7AVcIkRx8USXNF__tg_Mzk_gkX_0xmy3";
-const TEACHER_CODE = "tHKGaAPN22Epz2";
-const CHECKIN_MINUTES = 10;
-/* ================== */
-
-function now(){return new Date();}
-function today(){return now().toISOString().slice(0,10);}
-function dataKey(){return "attend-"+today();}
-function startKey(){return "start-"+today();}
-
-function isOpen(){
-  const s=localStorage.getItem(startKey());
-  if(!s) return false;
-  return (now()-new Date(s))/60000 <= CHECKIN_MINUTES;
-}
-
-function startSession(){
-  localStorage.setItem(startKey(),now());
-}
-
-function getData(){
-  return JSON.parse(localStorage.getItem(dataKey())||"[]");
-}
-
-function saveData(d){
-  localStorage.setItem(dataKey(),JSON.stringify(d));
-}
+const API_URL = "https://script.google.com/macros/s/AKfycbx8fEgU6S6GzeFUMkId-oSeom-zxbVLaMR3k02y-anvHcw-CxYVv310-kaniVSTlmNcCQ/exec";
 
 function checkin(){
-  if(!isOpen()){
-    show("ยังไม่เปิดให้เช็กชื่อ","var(--warn)");
-    return;
-  }
-
-  const sel=document.getElementById("student");
-  const sid=document.getElementById("sid").value.trim();
-  const name=sel.options[sel.selectedIndex]?.text;
-
-  if(!sel.value||!sid){
-    show("กรุณากรอกข้อมูลให้ครบ","var(--danger)");
-    return;
-  }
-
-  if(sid!==sel.value){
-    show("รหัสนักเรียนไม่ถูกต้อง","var(--danger)");
-    return;
-  }
-
-  let data=getData();
-  if(data.includes(name)){
-    show("คุณเช็กชื่อไปแล้ว","var(--danger)");
-    return;
-  }
-
-  data.push(name);
-  saveData(data);
-
-  fetch(DISCORD_WEBHOOK,{
-    method:"POST",
-    headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({
-      content:
-`Weight Training Attendance
-ชื่อ: ${name}
-เวลา: ${now().toLocaleString()}
-รวมวันนี้: ${data.length} คน`
-    })
-  });
-
-  show("เช็กชื่อสำเร็จ","var(--success)");
+  send({ sid: document.getElementById("sid").value });
 }
 
 function resetSystem(){
-  if(document.getElementById("teacher").value!==TEACHER_CODE){
-    show("รหัสอาจารย์ไม่ถูกต้อง","var(--danger)");
-    return;
-  }
-
-  localStorage.removeItem(dataKey());
-  startSession();
-
-  fetch(DISCORD_WEBHOOK,{
-    method:"POST",
-    headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({
-      content:
-`เริ่มคาบใหม่ (Weight Training)
-เปิดให้เช็กชื่อ ${CHECKIN_MINUTES} นาที`
-    })
-  });
-
-  show("เริ่มคาบใหม่เรียบร้อย","var(--success)");
+  send({ teacher: document.getElementById("teacher").value });
 }
 
-function show(t,c){
-  const m=document.getElementById("msg");
-  m.style.color=c;
-  m.innerText=t;
+function send(payload){
+  fetch(API_URL,{
+    method:"POST",
+    body: JSON.stringify(payload)
+  })
+  .then(r=>r.json())
+  .then(d=>{
+    document.getElementById("msg").innerText = d.message;
+  })
+  .catch(()=>{
+    document.getElementById("msg").innerText = "เชื่อมต่อระบบไม่ได้";
+  });
 }
 </script>
 </body>
