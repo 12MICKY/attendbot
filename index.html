@@ -43,7 +43,7 @@ body{
 }
 .header{
   text-align:center;
-  margin-bottom:20px;
+  margin-bottom:16px;
 }
 .header h1{
   margin:0;
@@ -55,13 +55,41 @@ body{
   font-size:14px;
   color:var(--muted);
 }
+
+/* TIMER */
 .timer{
   text-align:center;
-  margin:12px 0 18px;
-  font-size:15px;
-  font-weight:600;
-  color:var(--accent);
+  margin:16px 0 20px;
 }
+.timer-box{
+  display:inline-block;
+  padding:16px 28px;
+  border-radius:18px;
+  background:rgba(56,189,248,.08);
+  border:1px solid rgba(56,189,248,.35);
+}
+.timer-label{
+  font-size:13px;
+  color:#94a3b8;
+}
+.timer-time{
+  font-size:42px;
+  font-weight:700;
+  line-height:1.1;
+  color:#38bdf8;
+}
+.timer-unit{
+  font-size:14px;
+  color:#94a3b8;
+}
+.timer-danger{
+  background:rgba(239,68,68,.08);
+  border-color:#ef4444;
+}
+.timer-danger .timer-time{
+  color:#ef4444;
+}
+
 select,button,input{
   width:100%;
   padding:15px;
@@ -98,7 +126,7 @@ select,input{
 hr{
   border:0;
   border-top:1px solid var(--border);
-  margin:20px 0;
+  margin:18px 0;
 }
 .footer{
   margin-top:18px;
@@ -123,7 +151,6 @@ hr{
   <!-- เลือกชื่อ -->
   <select id="sidSelect">
     <option value="">-- เลือกชื่อ --</option>
-
     <option value="68265">เด็กชาย อิวโก้ แมคโอ เทย์</option>
     <option value="68038">เด็กชาย ชินอชิต์ อุดมรัชตะวานิชย์</option>
     <option value="68169">เด็กชาย พิชณุตม์ พิริยะสงวนพงศ์</option>
@@ -137,7 +164,6 @@ hr{
     <option value="66233">เด็กชาย ธนากร แดงนภาพรกุล</option>
     <option value="65097">เด็กชาย ธัญสิริ พระยาน้อย</option>
     <option value="65119">เด็กชาย ปรัตถกร โสราช</option>
-
     <option value="64029">นาย ชลภัทร เทศสกุลวงศ์</option>
     <option value="64182">นาย ศศะ คะชิมา</option>
     <option value="64024">นาย ชยกฤช ถาวรพานิช</option>
@@ -189,32 +215,48 @@ function remaining(){
 function updateTimer(){
   const t = remaining();
   const el = document.getElementById("timer");
-  if(t<=0){
-    el.innerText="หมดเวลาเช็กชื่อแล้ว";
-    el.style.color="#ef4444";
-  }else{
-    el.innerText="เวลาที่เหลือ: "+t.toFixed(1)+" นาที";
-    el.style.color="#38bdf8";
+
+  if(t <= 0){
+    el.innerHTML = `
+      <div class="timer-box timer-danger">
+        <div class="timer-label">หมดเวลา</div>
+        <div class="timer-time">00:00</div>
+        <div class="timer-unit">นาที</div>
+      </div>
+    `;
+    return;
   }
+
+  const min = Math.floor(t);
+  const sec = Math.floor((t - min) * 60);
+  const text = String(min).padStart(2,"0")+":"+String(sec).padStart(2,"0");
+
+  el.innerHTML = `
+    <div class="timer-box">
+      <div class="timer-label">เหลือเวลา</div>
+      <div class="timer-time">${text}</div>
+      <div class="timer-unit">นาที</div>
+    </div>
+  `;
 }
 setInterval(updateTimer,1000);
 updateTimer();
 
 function checkin(){
-  if(remaining()<=0){
+  if(remaining() <= 0){
     showMsg("หมดเวลาเช็กชื่อ",false);
     return;
   }
 
-  const sel=document.getElementById("sidSelect");
-  const sid=sel.value;
-  if(!sid){
+  const sel = document.getElementById("sidSelect");
+  if(!sel.value){
     showMsg("กรุณาเลือกชื่อ",false);
     return;
   }
 
-  const name=sel.options[sel.selectedIndex].text;
-  const time=new Date().toLocaleString("th-TH");
+  const name = sel.options[sel.selectedIndex].text;
+  const sid = sel.value;
+  const time = new Date().toLocaleString("th-TH");
 
   fetch(DISCORD_WEBHOOK_URL,{
     method:"POST",
@@ -233,8 +275,8 @@ function checkin(){
 }
 
 function resetSession(){
-  const code=document.getElementById("teacher").value;
-  if(code!==TEACHER_CODE){
+  const code = document.getElementById("teacher").value;
+  if(code !== TEACHER_CODE){
     showMsg("รหัสอาจารย์ไม่ถูกต้อง",false);
     return;
   }
@@ -251,10 +293,11 @@ function resetSession(){
 }
 
 function showMsg(text,ok){
-  const el=document.getElementById("msg");
-  el.innerText=text;
-  el.className="msg "+(ok?"success":"error");
+  const el = document.getElementById("msg");
+  el.innerText = text;
+  el.className = "msg " + (ok ? "success" : "error");
 }
 </script>
 </body>
 </html>
+
