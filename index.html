@@ -62,37 +62,27 @@ body{
   font-weight:600;
   color:var(--accent);
 }
-.field{
-  margin-bottom:14px;
-}
-input,select,button{
+select,button,input{
   width:100%;
   padding:15px;
   border-radius:14px;
   font-size:16px;
   border:none;
 }
-input,select{
+select,input{
   background:#020617;
   color:var(--text);
   border:1px solid var(--border);
 }
-input::placeholder{color:#64748b}
-.or{
-  text-align:center;
-  font-size:13px;
-  color:var(--muted);
-  margin:10px 0;
-}
 .btn{
-  margin-top:8px;
+  margin-top:14px;
   background:linear-gradient(180deg,#38bdf8,#0ea5e9);
   color:#020617;
   font-weight:600;
   cursor:pointer;
 }
-.btn:active{transform:translateY(1px)}
 .btn-reset{
+  margin-top:10px;
   background:#020617;
   color:var(--accent);
   border:1px solid var(--accent);
@@ -105,16 +95,16 @@ input::placeholder{color:#64748b}
 }
 .msg.success{color:var(--success)}
 .msg.error{color:var(--danger)}
+hr{
+  border:0;
+  border-top:1px solid var(--border);
+  margin:20px 0;
+}
 .footer{
   margin-top:18px;
   text-align:center;
   font-size:12px;
   color:#64748b;
-}
-hr{
-  border:0;
-  border-top:1px solid var(--border);
-  margin:18px 0;
 }
 </style>
 </head>
@@ -130,52 +120,43 @@ hr{
 
   <div id="timer" class="timer"></div>
 
-  <!-- กรอกรหัส -->
-  <div class="field">
-    <input id="sidInput" placeholder="กรอกรหัสนักเรียน">
-  </div>
-
-  <div class="or">หรือเลือกชื่อ</div>
-
   <!-- เลือกชื่อ -->
-  <div class="field">
-    <select id="sidSelect">
-      <option value="">-- เลือกชื่อ --</option>
-      <option value="68265">เด็กชาย อิวโก้ แมคโอ เทย์</option>
-      <option value="68038">เด็กชาย ชินอชิต์ อุดมรัชตะวานิชย์</option>
-      <option value="68169">เด็กชาย พิชณุตม์ พิริยะสงวนพงศ์</option>
-      <option value="68115">เด็กชาย นาวี วีระวงศกร</option>
-      <option value="67229">เด็กชาย ศราวิน บรรลุทรัพย์</option>
-      <option value="67065">เด็กชาย ณพล ตั้งจาตุรนต์รัศที</option>
-      <option value="67073">เด็กชาย ณัฏธนันท์ กฤษฎาภค</option>
-      <option value="67240">เด็กชาย สิกาญจน์ แสงสุริยไทย</option>
-      <option value="67249">เด็กชาย เสฎฐพงศ์ มหัทธนกุล</option>
-      <option value="67160">เด็กชาย พัสกรณ์ วัชระประไพพันธ์</option>
-      <option value="66233">เด็กชาย ธนากร แดงนภาพรกุล</option>
-      <option value="65097">เด็กชาย ธัญสิริ พระยาน้อย</option>
-      <option value="65119">เด็กชาย ปรัตถกร โสราช</option>
-      <option value="64029">นาย ชลภัทร เทศสกุลวงศ์</option>
-      <option value="64182">นาย ศศะ คะชิมา</option>
-      <option value="64024">นาย ชยกฤช ถาวรพานิช</option>
-      <option value="64094">นาย ธีรภัทร ศรีจิตร</option>
-      <option value="64100">นาย นิธิศ กุลไชย</option>
-      <option value="64110">นาย ปภังกร โอกาประกาศิต</option>
-      <option value="64089">นาย ธิปก ตั้งศิริพัฒน์</option>
-      <option value="63106">นาย ปกป้อง โพธิ์จักร</option>
-      <option value="63222">นาย สรัล อัสสะบำรุงรัตน์</option>
-      <option value="63219">นาย ศุภลิน ชื่นไพโรจน์</option>
-    </select>
-  </div>
+  <select id="sidSelect">
+    <option value="">-- เลือกชื่อ --</option>
+
+    <option value="68265">เด็กชาย อิวโก้ แมคโอ เทย์</option>
+    <option value="68038">เด็กชาย ชินอชิต์ อุดมรัชตะวานิชย์</option>
+    <option value="68169">เด็กชาย พิชณุตม์ พิริยะสงวนพงศ์</option>
+    <option value="68115">เด็กชาย นาวี วีระวงศกร</option>
+    <option value="67229">เด็กชาย ศราวิน บรรลุทรัพย์</option>
+    <option value="67065">เด็กชาย ณพล ตั้งจาตุรนต์รัศที</option>
+    <option value="67073">เด็กชาย ณัฏธนันท์ กฤษฎาภค</option>
+    <option value="67240">เด็กชาย สิกาญจน์ แสงสุริยไทย</option>
+    <option value="67249">เด็กชาย เสฎฐพงศ์ มหัทธนกุล</option>
+    <option value="67160">เด็กชาย พัสกรณ์ วัชระประไพพันธ์</option>
+    <option value="66233">เด็กชาย ธนากร แดงนภาพรกุล</option>
+    <option value="65097">เด็กชาย ธัญสิริ พระยาน้อย</option>
+    <option value="65119">เด็กชาย ปรัตถกร โสราช</option>
+
+    <option value="64029">นาย ชลภัทร เทศสกุลวงศ์</option>
+    <option value="64182">นาย ศศะ คะชิมา</option>
+    <option value="64024">นาย ชยกฤช ถาวรพานิช</option>
+    <option value="64094">นาย ธีรภัทร ศรีจิตร</option>
+    <option value="64100">นาย นิธิศ กุลไชย</option>
+    <option value="64110">นาย ปภังกร โอกาประกาศิต</option>
+    <option value="64089">นาย ธิปก ตั้งศิริพัฒน์</option>
+    <option value="63106">นาย ปกป้อง โพธิ์จักร</option>
+    <option value="63222">นาย สรัล อัสสะบำรุงรัตน์</option>
+    <option value="63219">นาย ศุภลิน ชื่นไพโรจน์</option>
+  </select>
 
   <button class="btn" onclick="checkin()">เช็กชื่อเข้าเรียน</button>
 
   <hr>
 
   <!-- อาจารย์ -->
-  <div class="field">
-    <input id="teacher" type="password" placeholder="รหัสอาจารย์">
-  </div>
-  <button class="btn btn-reset" onclick="resetSession()">เริ่มรอบใหม่ (10 นาที)</button>
+  <input id="teacher" type="password" placeholder="รหัสอาจารย์">
+  <button class="btn-reset" onclick="resetSession()">เริ่มรอบใหม่ (10 นาที)</button>
 
   <div id="msg" class="msg"></div>
 
@@ -225,19 +206,14 @@ function checkin(){
     return;
   }
 
-  const input=document.getElementById("sidInput").value.trim();
   const sel=document.getElementById("sidSelect");
-  const sid=input||sel.value;
-
+  const sid=sel.value;
   if(!sid){
-    showMsg("กรุณากรอกรหัสหรือเลือกชื่อ",false);
+    showMsg("กรุณาเลือกชื่อ",false);
     return;
   }
 
-  const name=input
-    ?"ไม่เลือกชื่อ (กรอกรหัสเอง)"
-    :sel.options[sel.selectedIndex].text;
-
+  const name=sel.options[sel.selectedIndex].text;
   const time=new Date().toLocaleString("th-TH");
 
   fetch(DISCORD_WEBHOOK_URL,{
@@ -253,7 +229,6 @@ function checkin(){
   });
 
   showMsg("เช็กชื่อเรียบร้อย",true);
-  document.getElementById("sidInput").value="";
   sel.value="";
 }
 
@@ -269,7 +244,9 @@ function resetSession(){
   fetch(DISCORD_WEBHOOK_URL,{
     method:"POST",
     headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({content:"เริ่มรอบเช็กชื่อใหม่ (10 นาที) โดยอาจารย์"})
+    body:JSON.stringify({
+      content:"เริ่มรอบเช็กชื่อใหม่ (10 นาที) โดยอาจารย์"
+    })
   });
 }
 
